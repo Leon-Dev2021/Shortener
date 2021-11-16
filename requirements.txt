@@ -1,4 +1,4 @@
-﻿﻿﻿APScheduler==3.6.3
+APScheduler==3.6.3
 backports.zoneinfo==0.2.1
 cachetools==4.2.2
 certifi==2021.10.8
@@ -11,3 +11,4 @@ six==1.10.0
 tornado==6.1
 tzdata==2021.5
 tzlocal==4.1
+chromedriver-py==95.0.4638.17
