@@ -1,5 +1,5 @@
 from os import environ as env
-# Descargar el executable of chromedriver
+from chromedriver_py import binary_path
 import traceback
 import schedule
 from time import sleep
@@ -22,7 +22,7 @@ from telegram.ext import(
     Filters
 )
 
-_browser: Chrome = None #Chrome()
+_browser: Chrome = Chrome(executable_path = binary_path)
 _flag: bool = True
 _elementId: str = ''
 _secondNumber: int = 0
@@ -43,7 +43,7 @@ _messages_list: list = []
 class _MyJob:
     def __init__(self, browser: Chrome, elementId: str):
         self._id: str = ''
-        #self._buttonElement = browser.find_element_by_id(elementId)
+        self._buttonElement = browser.find_element_by_id(elementId)
         self._started: bool = False
         self._deleted: bool = False
         self._state: bool = True
@@ -53,7 +53,7 @@ class _MyJob:
     def _job_func(self) -> NoReturn:
         global _messages_list, _bot
         if self._state:                     
-            #self._buttonElement.click()
+            self._buttonElement.click()
             self._counter += 1            
             if len(_messages_list) != 0:
                 for msg in _messages_list:
@@ -204,7 +204,7 @@ def _catchShortenedLink(ud: Update, ctx: CallbackContext) -> int:
                    '</b>' 
         )
         return _END
-    #_browser.get(_shortenedLink)    
+    _browser.get(_shortenedLink)    
     ctx.bot.send_message(
         chat_id = ud.message.chat_id,
         text = '<b>Type element id.</b>',
@@ -456,8 +456,7 @@ def _schedulerFunc() -> NoReturn:
         sleep(1)
     
 def _main():
-    #updater = Updater(token = env['TOKEN'])
-    updater = Updater(token = '1810373040:AAHBEoOG1h4FxZ4QCzRfAIo9g9P24DF3F2w')
+    updater = Updater(token = env['TOKEN'])
     dispatcher = updater.dispatcher
     
     dispatcher.add_error_handler(_errorHandler)
