@@ -1,9 +1,8 @@
 from os import environ as env
-from chromedriver_py import binary_path
 import traceback
 import schedule
 from time import sleep
-from selenium.webdriver import Chrome
+from selenium.webdriver import Chrome, ChromeOptions
 from threading import Thread
 from typing import NoReturn, Tuple
 
@@ -22,7 +21,12 @@ from telegram.ext import(
     Filters
 )
 
-_browser: Chrome = Chrome(executable_path = binary_path)
+_chrome_options = ChromeOptions()
+_chrome_options.binary_location = env['GOOGLE_CHROME_BIN']
+_chrome_options.add_argument('--disable-gpu')
+_chrome_options.add_argument('--no-sandbox')
+
+_browser: Chrome = Chrome(executable_path = env['CHROMEDRIVER_PATH'], chrome_options = _chrome_options)
 _flag: bool = True
 _elementId: str = ''
 _secondNumber: int = 0
@@ -490,9 +494,5 @@ if __name__ == '__main__':
     thr2: Thread = Thread(target = _schedulerFunc)
     thr1.start()
     thr2.start()
-
-
-
-
-
-
+    
+    
