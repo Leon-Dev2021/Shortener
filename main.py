@@ -23,6 +23,7 @@ from telegram.ext import(
 
 _chrome_options = ChromeOptions()
 _chrome_options.binary_location = env['GOOGLE_CHROME_BIN']
+_chrome_options.add_argument('--headless')
 _chrome_options.add_argument('--disable-gpu')
 _chrome_options.add_argument('--no-sandbox')
 
