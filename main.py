@@ -27,7 +27,7 @@ _chrome_options.add_argument('--headless')
 _chrome_options.add_argument('--disable-gpu')
 _chrome_options.add_argument('--no-sandbox')
 
-_browser: Chrome = Chrome(executable_path = env['CHROMEDRIVER_PATH'], chrome_options = _chrome_options)
+_browser: Chrome = None #Chrome(executable_path = env['CHROMEDRIVER_PATH'], chrome_options = _chrome_options)
 _flag: bool = True
 _elementId: str = ''
 _secondNumber: int = 0
@@ -48,7 +48,7 @@ _messages_list: list = []
 class _MyJob:
     def __init__(self, browser: Chrome, elementId: str):
         self._id: str = ''
-        self._buttonElement = browser.find_element_by_id(elementId)
+        #self._buttonElement = browser.find_element_by_id(elementId)
         self._started: bool = False
         self._deleted: bool = False
         self._state: bool = True
@@ -58,7 +58,7 @@ class _MyJob:
     def _job_func(self) -> NoReturn:
         global _messages_list, _bot
         if self._state:                     
-            self._buttonElement.click()
+            #self._buttonElement.click()
             self._counter += 1            
             if len(_messages_list) != 0:
                 for msg in _messages_list:
@@ -209,7 +209,7 @@ def _catchShortenedLink(ud: Update, ctx: CallbackContext) -> int:
                    '</b>' 
         )
         return _END
-    _browser.get(_shortenedLink)    
+    #_browser.get(_shortenedLink)    
     ctx.bot.send_message(
         chat_id = ud.message.chat_id,
         text = '<b>Type element id.</b>',
